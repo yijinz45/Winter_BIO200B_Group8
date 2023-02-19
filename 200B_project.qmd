@@ -55,7 +55,7 @@ select(,los,nihssb,age,brace,bgender,bhyper,bdiab,cursmker)
 **delet NA variabls and plot the summary of the variables**
 
 ```{r}
-na.omit(NINDS)
+NINDS <- na.omit(NINDS)
 summary(NINDS)
 ```
 
@@ -85,4 +85,12 @@ NINDS
 write_sas(NINDS, "/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.sas7bdat")
 ```
 
+
+
 ## 2. Plots for our variabls
+
+```{r}
+write.csv(NINDS,"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv")
+```
+
+

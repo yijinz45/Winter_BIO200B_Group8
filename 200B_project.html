@@ -159,63 +159,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><strong>delet NA variabls and plot the summary of the variables</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">na.omit</span>(NINDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>NINDS <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(NINDS)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(NINDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 607 × 8
-     los nihssb   age brace bgender bhyper bdiab cursmker
-   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
- 1    11     29  62.0     2       2      0     0      100
- 2     6     19  69.5     2       1      0     0        0
- 3    26     23  80.7     1       1    100   100        0
- 4    18     10  53.8     2       2    100     0        0
- 5     4      6  67.2     2       2    100     0        0
- 6     6     10  79.7     2       2      0     0        0
- 7    22     18  65.3     1       2    100   100      100
- 8     4      4  80.5     2       2      0   100        0
- 9     7      8  60.6     2       2    100   100        0
-10     7     13  54.4     1       2    100     0      100
-# … with 597 more rows</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(NINDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      los             nihssb           age            brace      
- Min.   :  0.00   Min.   : 1.00   Min.   :26.49   Min.   :1.000  
- 1st Qu.:  6.00   1st Qu.: 9.00   1st Qu.:60.12   1st Qu.:1.000  
- Median :  8.00   Median :14.00   Median :68.69   Median :2.000  
- Mean   : 11.85   Mean   :14.79   Mean   :66.94   Mean   :1.848  
- 3rd Qu.: 13.00   3rd Qu.:20.00   3rd Qu.:75.37   3rd Qu.:2.000  
- Max.   :143.00   Max.   :37.00   Max.   :89.00   Max.   :5.000  
-                                                                 
-    bgender         bhyper           bdiab           cursmker     
- Min.   :1.00   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
- 1st Qu.:1.00   1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00  
- Median :2.00   Median :100.00   Median :  0.00   Median :  0.00  
- Mean   :1.58   Mean   : 66.13   Mean   : 21.13   Mean   : 34.96  
- 3rd Qu.:2.00   3rd Qu.:100.00   3rd Qu.:  0.00   3rd Qu.:100.00  
- Max.   :2.00   Max.   :100.00   Max.   :100.00   Max.   :100.00  
-                NA's   :7        NA's   :4        NA's   :9       </code></pre>
+<pre><code>      los            nihssb           age            brace      
+ Min.   :  0.0   Min.   : 1.00   Min.   :26.49   Min.   :1.000  
+ 1st Qu.:  6.0   1st Qu.: 9.00   1st Qu.:59.92   1st Qu.:1.000  
+ Median :  8.0   Median :14.00   Median :68.44   Median :2.000  
+ Mean   : 11.8   Mean   :14.79   Mean   :66.78   Mean   :1.845  
+ 3rd Qu.: 13.0   3rd Qu.:20.00   3rd Qu.:75.29   3rd Qu.:2.000  
+ Max.   :143.0   Max.   :37.00   Max.   :89.00   Max.   :5.000  
+    bgender          bhyper           bdiab           cursmker     
+ Min.   :1.000   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
+ 1st Qu.:1.000   1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00  
+ Median :2.000   Median :100.00   Median :  0.00   Median :  0.00  
+ Mean   :1.578   Mean   : 65.73   Mean   : 20.92   Mean   : 35.09  
+ 3rd Qu.:2.000   3rd Qu.:100.00   3rd Qu.:  0.00   3rd Qu.:100.00  
+ Max.   :2.000   Max.   :100.00   Max.   :100.00   Max.   :100.00  </code></pre>
 </div>
 </div>
 <p><strong>create dummy variables</strong></p>
 <p><strong>Reference :</strong> #female, no hypertention history, no diabeties history, no smoke history.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>NINDS <span class="ot">&lt;-</span> NINDS <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># NINDS$gender &lt;- ifelse(NINDS$bgender == 1, 1, 0)</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bgender <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">hypertension1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">diabetes1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">smoke1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">black =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">hispanic =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">asian =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">other =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) </span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>NINDS </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>NINDS <span class="ot">&lt;-</span> NINDS <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># NINDS$gender &lt;- ifelse(NINDS$bgender == 1, 1, 0)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bgender <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">hypertension1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">diabetes1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">smoke1 =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>bdiab <span class="sc">==</span> <span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">black =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">hispanic =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">asian =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">other =</span> <span class="fu">ifelse</span>(NINDS<span class="sc">$</span>brace <span class="sc">==</span> <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>NINDS </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 624 × 16
+<pre><code># A tibble: 607 × 16
      los nihssb   age brace bgender bhyper bdiab cursmker gender hyper…¹ diabe…²
    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
  1    11     29  62.0     2       2      0     0      100      0       0       0
@@ -228,15 +210,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8     4      4  80.5     2       2      0   100        0      0       1       1
  9     7      8  60.6     2       2    100   100        0      0       1       1
 10     7     13  54.4     1       2    100     0      100      0       0       0
-# … with 614 more rows, 5 more variables: smoke1 &lt;dbl&gt;, black &lt;dbl&gt;,
+# … with 597 more rows, 5 more variables: smoke1 &lt;dbl&gt;, black &lt;dbl&gt;,
 #   hispanic &lt;dbl&gt;, asian &lt;dbl&gt;, other &lt;dbl&gt;, and abbreviated variable names
 #   ¹​hypertension1, ²​diabetes1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_sas</span>(NINDS, <span class="st">"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.sas7bdat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_sas</span>(NINDS, <span class="st">"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.sas7bdat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plots-for-our-variabls" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="plots-for-our-variabls"><span class="header-section-number">2</span> 2. Plots for our variabls</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(NINDS,<span class="st">"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 
 </main>
