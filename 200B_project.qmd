@@ -1,0 +1,84 @@
+---
+title: "Biostat 200B Project"
+subtitle: NINDS datase
+author: Xin Xie, Xingjian Xie, Yue Wang, Zoe Zhao
+format:
+  html:
+    theme: cosmo
+    number-sections: true
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+---
+
+
+```{r}
+library(dplyr)
+require(haven)
+```
+
+
+**read the data files**
+
+```{r}
+NINDS<-read_sas("/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/originalninds.sas7bdat")
+```
+
+
+## 1. Dataset Preparation
+
+**Select the variables**
+Predictor variables (tentative list) 
+X1: nihssb (nih stroke scale at baseline)
+X2: age (age in years)
+X3: brace (patient's race)
+X4: bgender (patient's gender)
+X5: bhyper (history of hypertension at baseline)
+X6: bdiab (history of diabetes at baseline)
+X7: cursmker (smoking (in year) prior to this stroke)
+
+
+```{r}
+NINDS <- NINDS %>%
+select(,los,nihssb,age,brace,bgender,bhyper,bdiab,cursmker)
+```
+
+**delet NA variabls and plot the summary of the variables**
+
+```{r}
+na.omit(NINDS)
+summary(NINDS)
+```
+
+**create dummy variables**
+
+**Reference :**
+#female, no hypertention history, no diabeties history, no smoke history. 
+
+
+```{r}
+  NINDS <- NINDS %>%
+mutate(, Gender <- ifelse(NINDS$bgender == 1, 1, 0),
+       hypertension1 <- ifelse(NINDS$bdiab == 100, 1, 0),
+       diabetes1 <- ifelse(NINDS$bdiab == 100, 1, 0),
+       smoke1 <- ifelse(NINDS$bdiab == 100, 1, 0),
+       black <- ifelse(NINDS$brace == 1, 1, 0),
+       hispanic <- ifelse(NINDS$brace == 3, 1, 0),
+       asian <- ifelse(NINDS$brace == 4, 1, 0),
+       other <- ifelse(NINDS$brace == 5, 1, 0),
+       ) 
+# select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) 
+  NINDS 
+  
+```
+
+## 2. Plots for our variabls
