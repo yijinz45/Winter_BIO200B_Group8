@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p><strong>create dummy variables</strong></p>
-<p><strong>Reference :</strong> #female, no hypertention history, no diabeties history, no smoke history.</p>
+<p><strong>Reference :</strong> #male=0, no hypertention history, no diabeties history, no smoke history, white people.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>NINDS <span class="ot">&lt;-</span> NINDS <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -220,7 +220,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="plots-for-our-variabls" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="plots-for-our-variabls"><span class="header-section-number">2</span> 2. Plots for our variabls</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(NINDS,<span class="st">"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(NINDS,<span class="st">"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(NINDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "los"           "nihssb"        "age"           "brace"        
+ [5] "bgender"       "bhyper"        "bdiab"         "cursmker"     
+ [9] "gender"        "hypertension1" "diabetes1"     "smoke1"       
+[13] "black"         "hispanic"      "asian"         "other"        </code></pre>
+</div>
 </div>
 </section>
 

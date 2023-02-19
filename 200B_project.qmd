@@ -62,7 +62,7 @@ summary(NINDS)
 **create dummy variables**
 
 **Reference :**
-#female, no hypertention history, no diabeties history, no smoke history. 
+#male=0, no hypertention history, no diabeties history, no smoke history, white people. 
 
 
 ```{r}
@@ -91,6 +91,8 @@ write_sas(NINDS, "/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200
 
 ```{r}
 write.csv(NINDS,"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv")
+
+names(NINDS)
 ```
 
 
