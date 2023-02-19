@@ -66,19 +66,23 @@ summary(NINDS)
 
 
 ```{r}
-  NINDS <- NINDS %>%
-mutate(, Gender <- ifelse(NINDS$bgender == 1, 1, 0),
-       hypertension1 <- ifelse(NINDS$bdiab == 100, 1, 0),
-       diabetes1 <- ifelse(NINDS$bdiab == 100, 1, 0),
-       smoke1 <- ifelse(NINDS$bdiab == 100, 1, 0),
-       black <- ifelse(NINDS$brace == 1, 1, 0),
-       hispanic <- ifelse(NINDS$brace == 3, 1, 0),
-       asian <- ifelse(NINDS$brace == 4, 1, 0),
-       other <- ifelse(NINDS$brace == 5, 1, 0),
-       ) 
-# select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) 
-  NINDS 
+NINDS <- NINDS %>%
   
+ # NINDS$gender <- ifelse(NINDS$bgender == 1, 1, 0)
+
+mutate(gender = ifelse(NINDS$bgender == 1, 1, 0),
+       hypertension1 = ifelse(NINDS$bdiab == 100, 1, 0),
+       diabetes1 = ifelse(NINDS$bdiab == 100, 1, 0),
+       smoke1 = ifelse(NINDS$bdiab == 100, 1, 0),
+       black = ifelse(NINDS$brace == 1, 1, 0),
+       hispanic = ifelse(NINDS$brace == 3, 1, 0),
+       asian = ifelse(NINDS$brace == 4, 1, 0),
+       other = ifelse(NINDS$brace == 5, 1, 0),
+       )
+# select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) 
+NINDS 
+
+write_sas(NINDS, "/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.sas7bdat")
 ```
 
 ## 2. Plots for our variabls
