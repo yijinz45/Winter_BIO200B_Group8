@@ -24,13 +24,17 @@ knitr:
 ```{r}
 library(dplyr)
 require(haven)
+library(ggplot2)
+library(psych)
+library(performance)
 ```
 
 
 **read the data files**
 
 ```{r}
-NINDS<-read_sas("/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/originalninds.sas7bdat")
+NINDS = read_sas('originalninds.sas7bdat')
+#NINDS<-read_sas("/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/originalninds.sas7bdat")
 ```
 
 
@@ -82,15 +86,43 @@ mutate(gender = ifelse(NINDS$bgender == 1, 1, 0),
 # select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) 
 NINDS 
 
-write_sas(NINDS, "/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.sas7bdat")
+#write.csv(NINDS,"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv")
 ```
 
 
 
 ## 2. Plots for our variabls
-
 ```{r}
-write.csv(NINDS,"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv")
+NINDS = NINDS %>%
+select(c('gender','hypertension1','diabetes1','smoke1','black','hispanic',
+         'asian', 'other', 'los', 'nihssb', 'age'))
+NINDS$los=log(NINDS$los)
+NINDS$los[!is.finite(NINDS$los)] = NA
+remove_missing(NINDS)
+
+NINDS %>%
+  ggplot(aes(y = los, x = nihssb, color = gender)) + geom_point() +
+  geom_smooth()
 ```
 
+```{r}
+NINDS %>%
+pairs.panels()
+```
+
+
+
+
+```{r}
+model = lm(los~gender + hypertension1 + black + hispanic + asian + other + nihssb + 
+     age,
+   data = NINDS)
+model %>%
+  check_collinearity()
+```
+
+```{R}
+model %>%
+  summary()
+```
 
