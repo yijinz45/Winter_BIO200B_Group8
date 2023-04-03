@@ -27,14 +27,23 @@ require(haven)
 library(ggplot2)
 library(psych)
 library(performance)
+library(caret)
+library(corrplot)
+library(gridExtra)
+library(olsrr)
 ```
 
 
 **read the data files**
 
 ```{r}
-NINDS = read_sas('originalninds.sas7bdat')
-#NINDS<-read_sas("/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/originalninds.sas7bdat")
+# NINDS = read_sas('originalninds.sas7bdat')
+NINDS<-read_sas("/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/originalninds.sas7bdat")
+```
+
+
+```{r}
+names(NINDS)
 ```
 
 
@@ -51,9 +60,14 @@ X6: bdiab (history of diabetes at baseline)
 X7: cursmker (smoking (in year) prior to this stroke)
 
 
+We new add some more variables into the model. 
+Add hour24 treatcd ninety
+
+
+
 ```{r}
 NINDS <- NINDS %>%
-select(,los,nihssb,age,brace,bgender,bhyper,bdiab,cursmker)
+select(,los,nihssb,age,brace,bgender,bhyper,bdiab,cursmker,hour24,treatcd,ninety,int3mles,oldvol)
 ```
 
 **delet NA variabls and plot the summary of the variables**
@@ -72,7 +86,6 @@ summary(NINDS)
 ```{r}
 NINDS <- NINDS %>%
   
- # NINDS$gender <- ifelse(NINDS$bgender == 1, 1, 0)
 
 mutate(gender = ifelse(NINDS$bgender == 1, 1, 0),
        hypertension1 = ifelse(NINDS$bdiab == 100, 1, 0),
@@ -82,7 +95,14 @@ mutate(gender = ifelse(NINDS$bgender == 1, 1, 0),
        hispanic = ifelse(NINDS$brace == 3, 1, 0),
        asian = ifelse(NINDS$brace == 4, 1, 0),
        other = ifelse(NINDS$brace == 5, 1, 0),
+       prtreat = ifelse(NINDS$treatcd == 1, 1, 0),
+       # heparin =ifelse(NINDS$heparin == 1, 1, 0),
+       # preccb =ifelse(NINDS$preccb == 1, 1, 0),
        )
+
+# NINDS$ninety [NINDS$ninety == 42 ] <- NA
+# NINDS$hour24 [NINDS$hour24 == 42] <- NA
+
 # select(,nihssb,age,brace,male,female,hypertension,diabetes,smoke) 
 NINDS 
 
@@ -95,40 +115,80 @@ NINDS
 ```{r}
 NINDS = NINDS %>%
 select(c('gender','hypertension1','diabetes1','smoke1','black','hispanic',
-         'asian', 'other', 'los', 'nihssb', 'age'))
+         'asian', 'other', 'los', 'nihssb', 'age','hour24','treatcd', 'ninety', 'int3mles','oldvol'))
 NINDS$los=log(NINDS$los)
+NINDS$hour24=log(NINDS$hour24)
+NINDS$int3mles=log(NINDS$int3mles)
 NINDS$los[!is.finite(NINDS$los)] = NA
-remove_missing(NINDS)
+NINDS$hour24[!is.finite(NINDS$hour24)] = NA
+NINDS$int3mles[!is.finite(NINDS$int3mles)] = NA
+NINDS$oldvol[!is.finite(NINDS$oldvol)] = NA
+NINDS <- na.omit(NINDS)
 
-NINDS %>%
-  ggplot(aes(y = los, x = nihssb, color = gender)) + geom_point() +
-  geom_smooth()
 ```
 
 ```{r}
-<<<<<<< HEAD
 write.csv(NINDS,"/Users/Aoki/Desktop/UCLA/Quarter_2/BIOSTATS_200B/Winter_BIO200B_Group8/NINDS.csv")
 
 names(NINDS)
-=======
 NINDS %>%
 pairs.panels()
->>>>>>> e8b4f7d85fcdcac44b697dc063c5f668a0c9fc7e
+
+NINDS %>%
+ggplot() + 
+geom_point(mapping = aes(x = oldvol , y = hour24))
+
+NINDS %>% 
+ggplot(,mapping = aes(x = oldvol)) + 
+  geom_boxplot()
+
 ```
 
 
 
 
 ```{r}
-model = lm(los~gender + hypertension1 + black + hispanic + asian + other + nihssb + 
-     age,
-   data = NINDS)
-model %>%
-  check_collinearity()
+model = lm(los~gender + hypertension1 + black + hispanic + asian + other + nihssb +
+     age +treatcd +ninety +int3mles,
+     data = NINDS)
+
+model1 = lm (hour24~ treatcd + nihssb + ninety +  oldvol , data = NINDS)
 ```
 
 ```{R}
+
 model %>%
   summary()
+
+model1 %>%
+  summary()
 ```
+
+```{r}
+
+NINDS1 <- NINDS %>%
+  select(hour24, treatcd , nihssb , ninety , int3mles,oldvol)
+  
+plot1<-cor(x = NINDS1, use = "pairwise")
+plot1
+corrplot(plot1, method = "circle", order= "hclust")
+```
+
+```{r}
+qqnorm(NINDS$hour24)
+qqline(NINDS$hour24)
+```
+
+```{r}
+abc<- abc %>%
+  select('24hour_scale', Lesion_volume, Gender, Baseline_scale, Black, Hispanic, Asian,
+         Other_race, age, Treatment, Length_of_Stay, Hypertension, '7to10days_Scale') %>%
+  rename(  Age=age)
+
+plot2<-cor(x = abc, use = "pairwise")
+plot2
+corrplot(plot2, method = "ellipse", order= "AOE", type = "upper")
+```
+
+
 
